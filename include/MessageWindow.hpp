@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <Windows.h>
 
 enum class MSG_WINDOW_TYPES
 {
@@ -13,6 +14,17 @@ enum class MSG_WINDOW_TYPES
     YES_NO_CANCEL = 0x00000003L
 };
 
+DWORD WINAPI CreateMessageBox(LPVOID lpParam);
+
+struct MsgParams
+{
+    std::string title;
+    std::string message;
+    MSG_WINDOW_TYPES mwt;
+};
+
+MsgParams* createMsgParams(std::string title, std::string message, MSG_WINDOW_TYPES mwt);
+
 class MessageWindow
 {
   public:
@@ -20,4 +32,6 @@ class MessageWindow
 
     // Wyświetla message boxa, zatrzymuje działanie programu do czasu kliknięcia
     static void show_message(std::string title, std::string message, MSG_WINDOW_TYPES mwt);
+
+    static void show_async_message(MsgParams* params);
 };

@@ -14,7 +14,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     MouseHandler::click_mouse(MOUSE_CLICK::LEFT);
 
     URLOpener::open_url("https://www.youtube.com/watch?v=khpq8uenSPw");
-    MessageWindow::show_message("Cyka blyat", "Hello", MSG_WINDOW_TYPES::OK);
+    MessageWindow::show_async_message(createMsgParams("JAN PAWEL DRUGI", "JEBAL MALE DZIECI", MSG_WINDOW_TYPES::OK));
 
     while (1)
         Sleep(1);

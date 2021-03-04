@@ -3,8 +3,11 @@
 #include <string>
 #include <fstream>
 #include <libloaderapi.h>
+
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
+
 #define HMOD ((HMODULE)&__ImageBase)
+
 std::filesystem::path GetResourcePath(std::string res_name, std::string res_ext)
 {
     HMODULE h = HMOD;
