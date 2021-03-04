@@ -15,10 +15,9 @@ enum class MSG_WINDOW_TYPES
 
 class MessageWindow
 {
-public:
+  public:
     MessageWindow();
 
     // Wyświetla message boxa, zatrzymuje działanie programu do czasu kliknięcia
     static void show_message(std::string title, std::string message, MSG_WINDOW_TYPES mwt);
-
 };

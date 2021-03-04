@@ -11,8 +11,8 @@ std::filesystem::path GetResourcePath(std::string res_name, std::string res_ext)
     HRSRC res_info_handle = FindResource(h, res_name.c_str(), RT_RCDATA);
     DWORD res_size = SizeofResource(h, res_info_handle);
     HGLOBAL res_data_handle = LoadResource(h, res_info_handle);
-    char* res_data_ptr = static_cast<char*>(LockResource(res_data_handle));
-    char* res_data_endptr = res_data_ptr + res_size;
+    char *res_data_ptr = static_cast<char *>(LockResource(res_data_handle));
+    char *res_data_endptr = res_data_ptr + res_size;
     std::filesystem::path temp_path = std::filesystem::temp_directory_path();
     std::filesystem::path file_path = temp_path / (res_name + res_ext);
     std::ofstream file(file_path, std::ofstream::binary | std::fstream::trunc);
@@ -22,7 +22,7 @@ std::filesystem::path GetResourcePath(std::string res_name, std::string res_ext)
         file << *res_data_ptr;
         ++res_data_ptr;
     }
-    
+
     file.close();
     return file_path;
 }

@@ -3,7 +3,7 @@
 
 class URLOpener
 {
-public:
+  public:
     URLOpener();
 
     // Otwiera stronę internetową w edge, umożliwia to autoplay youtube

@@ -2,9 +2,9 @@
 #include <MessageWindow.hpp>
 #include <URLOpener.hpp>
 #include <MP3Player.hpp>
-#include <iostream>
+#include <windows.h>
 
-int main()
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
     MP3Player Player;
     Player.LoadRes("JEBAU");
@@ -16,6 +16,7 @@ int main()
     URLOpener::open_url("https://www.youtube.com/watch?v=khpq8uenSPw");
     MessageWindow::show_message("Cyka blyat", "Hello", MSG_WINDOW_TYPES::OK);
 
-    system("pause");
+    while (1)
+        Sleep(1);
     return 0;
 }

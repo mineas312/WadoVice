@@ -44,7 +44,7 @@ project("TestExe" VERSION ${PROJECT_VERSION} DESCRIPTION "Changeme")
 # Add src to the project
 file(GLOB SRC_EXE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/exe/src/*.cpp)
 
-add_executable("TestExe" ${SRC_EXE_FILES})
+add_executable("TestExe" WIN32 ${SRC_EXE_FILES})
 
 # Add include to the project
 target_include_directories("TestExe" PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/exe/include ${CMAKE_CURRENT_SOURCE_DIR}/exe/src)
