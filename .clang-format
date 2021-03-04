@@ -1,0 +1,27 @@
+BasedOnStyle: LLVM
+UseTab: Never
+IndentWidth: 4
+IndentCaseBlocks: false
+IndentCaseLabels: true
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+    AfterCaseLabel: true
+    AfterClass: true
+    AfterEnum: true
+    AfterFunction: true
+    AfterNamespace: true
+    AfterStruct: true
+    AfterUnion: true
+    AfterExternBlock: true
+    AfterControlStatement: Always
+    BeforeCatch: true
+    BeforeElse: true
+    BeforeLambdaBody: true
+    BeforeWhile: false
+    SplitEmptyFunction: false
+    SplitEmptyRecord: false
+    SplitEmptyNamespace: false
+AllowShortIfStatementsOnASingleLine: false
+ColumnLimit: 0
+SortIncludes: false

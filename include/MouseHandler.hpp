@@ -8,7 +8,7 @@ enum class MOUSE_CLICK
 
 class MouseHandler
 {
-public:
+  public:
     MouseHandler();
 
     // Przesuwa mysz w dane miejsce

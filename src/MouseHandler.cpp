@@ -17,16 +17,16 @@ void MouseHandler::click_mouse(MOUSE_CLICK mc)
     POINT cursor_pos;
     GetCursorPos(&cursor_pos);
 
-    switch(mc)
+    switch (mc)
     {
         case MOUSE_CLICK::LEFT:
         {
-            input.mi.dwFlags = (MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP);
+            input.mi.dwFlags = (MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP);
             break;
         }
         case MOUSE_CLICK::RIGHT:
         {
-            input.mi.dwFlags = (MOUSEEVENTF_RIGHTDOWN|MOUSEEVENTF_RIGHTUP);
+            input.mi.dwFlags = (MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP);
             break;
         }
     }
