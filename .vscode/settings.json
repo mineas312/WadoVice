@@ -42,6 +42,22 @@
         "xutility": "cpp",
         "chrono": "cpp",
         "ratio": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "filesystem": "cpp",
+        "fstream": "cpp",
+        "algorithm": "cpp",
+        "bit": "cpp",
+        "clocale": "cpp",
+        "ctime": "cpp",
+        "iomanip": "cpp",
+        "list": "cpp",
+        "locale": "cpp",
+        "sstream": "cpp",
+        "stop_token": "cpp",
+        "vector": "cpp",
+        "xlocbuf": "cpp",
+        "xlocmes": "cpp",
+        "xlocmon": "cpp",
+        "xloctime": "cpp"
     }
 }
