@@ -14,12 +14,13 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 # ---- Shared library project ----
 project(${PROJECT_NAME} VERSION ${PROJECT_VERSION} DESCRIPTION "Changeme")
 
-# Add include and src to the project
+# Add include, src and resources to the project
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/src)
 file(GLOB SRC_LIB_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
+file(GLOB RES_LIB_FILES ${CMAKE_CURRENT_SOURCE_DIR}/res/*.rc)
 
 # Set project as a shared library
-add_library(${PROJECT_NAME} SHARED ${SRC_LIB_FILES})
+add_library(${PROJECT_NAME} SHARED ${SRC_LIB_FILES} ${RES_LIB_FILES})
 
 # Set lib.so properties
 set_target_properties(${PROJECT_NAME}
