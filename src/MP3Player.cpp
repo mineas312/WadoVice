@@ -21,12 +21,14 @@ void MP3Player::LoadFile(std::string mp3_path, std::string alias)
     mciSendString(command.c_str(), NULL, 0, 0);
 }
 
-void MP3Player::Play(std::string alias, bool loop) {
+void MP3Player::Play(std::string alias, bool loop)
+{
     std::string command = "play " + alias + (loop ? " repeat" : " from 0");
     mciSendString(command.c_str(), NULL, 0, 0);
 }
 
-void MP3Player::Stop(std::string alias) {
+void MP3Player::Stop(std::string alias)
+{
     std::string command = "stop " + alias;
     mciSendString(command.c_str(), NULL, 0, 0);
 }
