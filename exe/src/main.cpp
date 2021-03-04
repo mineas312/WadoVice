@@ -2,6 +2,7 @@
 #include <MessageWindow.hpp>
 #include <URLOpener.hpp>
 #include <MP3Player.hpp>
+
 #include <iostream>
 
 int main()
@@ -14,7 +15,7 @@ int main()
     MouseHandler::click_mouse(MOUSE_CLICK::LEFT);
 
     URLOpener::open_url("https://www.youtube.com/watch?v=khpq8uenSPw");
-    MessageWindow::show_message("Cyka blyat", "Hello", MSG_WINDOW_TYPES::OK);
+    MessageWindow::show_async_message(createMsgParams("JAN PAWEL DRUGI", "JEBAL MALE DZIECI", MSG_WINDOW_TYPES::OK));
 
     system("pause");
     return 0;
