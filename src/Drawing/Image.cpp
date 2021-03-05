@@ -1,11 +1,14 @@
-#include "Image.h"
+#include <Drawing/Image.hpp>
 
 Image::Image(const BYTE *image, int size)
 {
     if (image)
     {
         if (!texture)
+        {
             D3DXCreateTextureFromFileInMemory(g_pd3dDevice, image, size, &texture);
+            D3DXGetImageInfoFromFileInMemory(image, size, &info);
+        }
 
         /*	D3DSURFACE_DESC imgDesc;
 			texture->GetLevelDesc(0, &imgDesc);

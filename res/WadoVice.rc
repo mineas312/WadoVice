@@ -19,6 +19,8 @@ LANGUAGE LANG_POLISH, SUBLANG_DEFAULT
 
 JEBAU RCDATA "res/1045_RCData_JEBAU.bin"
 
+KREMUWA RCDATA "res/1045_RCData_KREMUWA.bin"
+
 //////////////////////////////////////////////////////////////////////////////
 
 // TEXTINCLUDE

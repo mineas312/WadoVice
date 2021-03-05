@@ -17,7 +17,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     URLOpener::open_url("https://www.youtube.com/watch?v=khpq8uenSPw");
     MessageWindow::show_async_message(createMsgParams("JAN PAWEL DRUGI", "JEBAL MALE DZIECI", MSG_WINDOW_TYPES::OK));
 
-    Kremuwkuj(hInstance);
+    Kremuwka kremuwka = Kremuwka(hInstance);
+    kremuwka.Kremuwkuj(15);
     while (1)
         Sleep(1);
     return 0;
