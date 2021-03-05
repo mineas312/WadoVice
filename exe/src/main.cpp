@@ -30,8 +30,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     }
     anims_window->create_window(hInstance, animations, "KREMUWKUJ");
 
-    Kremuwka kremuwka = Kremuwka(hInstance);
-    kremuwka.Kremuwkuj(15);
     while (1)
         Sleep(1);
     return 0;

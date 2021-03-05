@@ -31,13 +31,13 @@ BorderlessTransparentWindow::BorderlessTransparentWindow()
     dx = new DirectX();
 }
 
-void BorderlessTransparentWindow::create_window(HINSTANCE hInst, std::vector<Animation*> animations, std::string title)
+void BorderlessTransparentWindow::create_window(HINSTANCE hInst, std::vector<Animation *> animations, std::string title)
 {
     hInstance = hInst;
     window_thread = std::thread(&BorderlessTransparentWindow::prepare_window, this, hInst, animations, title);
 }
 
-void BorderlessTransparentWindow::prepare_window(HINSTANCE hInstance, std::vector<Animation*> animations, std::string title)
+void BorderlessTransparentWindow::prepare_window(HINSTANCE hInstance, std::vector<Animation *> animations, std::string title)
 {
     // Create window class
     WNDCLASSEXA wc;
@@ -81,14 +81,14 @@ void BorderlessTransparentWindow::prepare_window(HINSTANCE hInstance, std::vecto
     ShowWindow(hWnd, SW_SHOWDEFAULT);
     UpdateWindow(hWnd);
 
-    for (Animation* a : animations)
+    for (Animation *a : animations)
     {
         a->DXInitialized();
     }
 
     MSG Msg;
     ZeroMemory(&Msg, sizeof(Msg));
-    
+
     while (Msg.message != WM_QUIT)
     {
         if (PeekMessage(&Msg, hWnd, 0, 0, PM_REMOVE))
@@ -106,7 +106,7 @@ void BorderlessTransparentWindow::prepare_window(HINSTANCE hInstance, std::vecto
             // Draw draw;
             // draw.Line(0, 0, 500, 500, RGBA(255, 0, 0), 3);
             // draw.String("asdasda123", 500, 500, centered, RGBA(0, 255, 0), DX9.fontTahoma, true);
-            for (Animation* a : animations)
+            for (Animation *a : animations)
             {
                 a->DrawFrame();
             }

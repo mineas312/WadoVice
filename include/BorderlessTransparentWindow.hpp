@@ -10,17 +10,17 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 class BorderlessTransparentWindow
 {
-    public:
-        BorderlessTransparentWindow();
+  public:
+    BorderlessTransparentWindow();
 
-        // Okna muszą mieć unikatowe nazwy
-        void create_window(HINSTANCE hInst, std::vector<Animation*> animations, std::string title);
-        DirectX* dx;
+    // Okna muszą mieć unikatowe nazwy
+    void create_window(HINSTANCE hInst, std::vector<Animation *> animations, std::string title);
+    DirectX *dx;
 
-    private:
-        void prepare_window(HINSTANCE hInst, std::vector<Animation*> animations, std::string title);
+  private:
+    void prepare_window(HINSTANCE hInst, std::vector<Animation *> animations, std::string title);
 
-    private:
-        HINSTANCE hInstance;
-        std::thread window_thread;
+  private:
+    HINSTANCE hInstance;
+    std::thread window_thread;
 };
