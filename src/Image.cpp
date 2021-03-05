@@ -16,7 +16,7 @@ Image::Image(const BYTE *image, int size)
             D3DXCreateSprite(g_pd3dDevice, &sprite);
     }
 }
-void Image::Draw(int x, int y, int z = 0)
+void Image::Draw(int x, int y, int z)
 {
     pos.x = x;
     pos.y = y;
