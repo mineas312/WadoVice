@@ -4,7 +4,6 @@
 #include <MP3Player.hpp>
 #include <Kremuwka.hpp>
 #include <windows.h>
-#include <d3d9.h>
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
