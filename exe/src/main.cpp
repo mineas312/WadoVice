@@ -2,7 +2,9 @@
 #include <MessageWindow.hpp>
 #include <URLOpener.hpp>
 #include <MP3Player.hpp>
+#include <Kremuwka.hpp>
 #include <windows.h>
+#include <d3d9.h>
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
@@ -16,6 +18,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     URLOpener::open_url("https://www.youtube.com/watch?v=khpq8uenSPw");
     MessageWindow::show_async_message(createMsgParams("JAN PAWEL DRUGI", "JEBAL MALE DZIECI", MSG_WINDOW_TYPES::OK));
 
+    Kremuwkuj(hInstance);
     while (1)
         Sleep(1);
     return 0;
