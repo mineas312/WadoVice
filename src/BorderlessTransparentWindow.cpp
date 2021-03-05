@@ -1,9 +1,10 @@
+#include <Drawing/Animation.hpp>
 #include <Drawing/Draw.hpp>
 #include <Drawing/Image.hpp>
 #include <ResourceUtil.hpp>
 #include <BorderlessTransparentWindow.hpp>
-
 #include <iostream>
+#include <vector>
 
 #define SCREENWIDTH ::GetSystemMetrics(SM_CXSCREEN)
 #define SCREENHEIGHT ::GetSystemMetrics(SM_CYSCREEN)
@@ -30,13 +31,13 @@ BorderlessTransparentWindow::BorderlessTransparentWindow()
     dx = new DirectX();
 }
 
-void BorderlessTransparentWindow::create_window(HINSTANCE hInst, std::string resource, std::string title, int speed)
+void BorderlessTransparentWindow::create_window(HINSTANCE hInst, std::vector<Animation*> animations, std::string title)
 {
     hInstance = hInst;
-    window_thread = std::thread(&BorderlessTransparentWindow::prepare_window, this, hInst, resource, title, speed);
+    window_thread = std::thread(&BorderlessTransparentWindow::prepare_window, this, hInst, animations, title);
 }
 
-void BorderlessTransparentWindow::prepare_window(HINSTANCE hInstance, std::string resource, std::string title, int speed)
+void BorderlessTransparentWindow::prepare_window(HINSTANCE hInstance, std::vector<Animation*> animations, std::string title)
 {
     // Create window class
     WNDCLASSEXA wc;
@@ -80,16 +81,14 @@ void BorderlessTransparentWindow::prepare_window(HINSTANCE hInstance, std::strin
     ShowWindow(hWnd, SW_SHOWDEFAULT);
     UpdateWindow(hWnd);
 
-    // Load image
-    ResourceMem img = ResourceUtil::GetResourceMemory(resource);
-    Image *kremuwka = new Image((const BYTE *)img.start, (int)img.size, *dx);
-    int x = 0;
-    int y = 0;
-    int x_dir = 0;
-    int y_dir = 0;
+    for (Animation* a : animations)
+    {
+        a->DXInitialized();
+    }
 
     MSG Msg;
     ZeroMemory(&Msg, sizeof(Msg));
+    
     while (Msg.message != WM_QUIT)
     {
         if (PeekMessage(&Msg, hWnd, 0, 0, PM_REMOVE))
@@ -107,18 +106,10 @@ void BorderlessTransparentWindow::prepare_window(HINSTANCE hInstance, std::strin
             // Draw draw;
             // draw.Line(0, 0, 500, 500, RGBA(255, 0, 0), 3);
             // draw.String("asdasda123", 500, 500, centered, RGBA(0, 255, 0), DX9.fontTahoma, true);
-            if (y >= SCREENHEIGHT - (int)(kremuwka->info.Height))
-                y_dir = 1;
-            if (y <= 0)
-                y_dir = 0;
-            if (x >= SCREENWIDTH - (int)(kremuwka->info.Width))
-                x_dir = 1;
-            if (x <= 0)
-                x_dir = 0;
-
-            x += x_dir ? -speed : speed;
-            y += y_dir ? -speed : speed;
-            kremuwka->Draw(x, y);
+            for (Animation* a : animations)
+            {
+                a->DrawFrame();
+            }
             dx->pd3dDevice->EndScene();
         }
         HRESULT result = dx->pd3dDevice->Present(NULL, NULL, NULL, NULL);
