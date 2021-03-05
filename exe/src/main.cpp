@@ -5,6 +5,8 @@
 #include <BorderlessTransparentWindow.hpp>
 #include <windows.h>
 
+#include <vector>
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
     //MP3Player Player;
@@ -17,7 +19,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     //URLOpener::open_url("https://www.youtube.com/watch?v=khpq8uenSPw");
     //MessageWindow::show_async_message(createMsgParams("JAN PAWEL DRUGI", "JEBAL MALE DZIECI", MSG_WINDOW_TYPES::OK));
 
-    BorderlessTransparentWindow kremuwka = BorderlessTransparentWindow(hInstance, "KREMUWKUJ");
+    for(int i = 0; i < 20; i++)
+    {
+        BorderlessTransparentWindow* kremuwa = new BorderlessTransparentWindow();
+        kremuwa->create_window(hInstance, "KREMUWA", "KREMUWKUJ" + std::to_string(i), 40);
+        Sleep(1000);
+    }
+
     while (1)
         Sleep(1);
     return 0;

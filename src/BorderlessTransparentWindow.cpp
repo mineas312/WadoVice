@@ -1,22 +1,14 @@
-#include <Windows.h>
-#include <string>
-#include <thread>
-
 #include <Drawing/Draw.hpp>
 #include <Drawing/Image.hpp>
 #include <ResourceUtil.hpp>
 #include <BorderlessTransparentWindow.hpp>
 
+#include <iostream>
+
 #define SCREENWIDTH ::GetSystemMetrics(SM_CXSCREEN)
 #define SCREENHEIGHT ::GetSystemMetrics(SM_CYSCREEN)
 
-BorderlessTransparentWindow::BorderlessTransparentWindow(HINSTANCE hInst, std::string title, int speed)
-{
-    hInstance = hInst;
-    prepare_window(title, speed);
-}
-
-LRESULT CALLBACK BorderlessTransparentWindow::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     switch (msg)
     {
@@ -33,8 +25,20 @@ LRESULT CALLBACK BorderlessTransparentWindow::WndProc(HWND hwnd, UINT msg, WPARA
     return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
-void BorderlessTransparentWindow::prepare_window(std::string title, int speed)
+BorderlessTransparentWindow::BorderlessTransparentWindow()
 {
+    dx = new DirectX();
+}
+
+void BorderlessTransparentWindow::create_window(HINSTANCE hInst, std::string resource, std::string title, int speed)
+{
+    hInstance = hInst;
+    window_thread = std::thread(&BorderlessTransparentWindow::prepare_window, this, hInst, resource, title, speed);
+}
+
+void BorderlessTransparentWindow::prepare_window(HINSTANCE hInstance, std::string resource, std::string title, int speed)
+{
+    // Create window class
     WNDCLASSEXA wc;
     wc.cbSize = sizeof(WNDCLASSEXA);
     wc.style = CS_VREDRAW | CS_HREDRAW | CS_NOCLOSE;
@@ -50,28 +54,35 @@ void BorderlessTransparentWindow::prepare_window(std::string title, int speed)
     wc.lpszMenuName = title.c_str();
     wc.lpszClassName = title.c_str();
 
+    // Register class
     if (!RegisterClassExA(&wc))
     {
+        std::cout << GetLastError() << std::endl;
         UnregisterClassA(wc.lpszClassName, wc.hInstance);
         return;
     }
 
+    // Create window
     HWND hWnd = CreateWindowExA(WS_EX_TOPMOST | WS_EX_LAYERED | WS_EX_TOOLWINDOW, title.c_str(), title.c_str(), WS_POPUP, 1, 1, SCREENWIDTH, SCREENHEIGHT, 0, 0, 0, 0);
+    std::cout << GetLastError() << std::endl;
     SetLayeredWindowAttributes(hWnd, 0, 0, LWA_ALPHA);
     SetLayeredWindowAttributes(hWnd, 0, 0, LWA_COLORKEY);
 
-    if (!dx.Init(hWnd))
+    // Hook d3d to the window
+    if (!dx->Init(hWnd))
     {
-        dx.Cleanup();
+        dx->Cleanup();
         UnregisterClassA(wc.lpszClassName, wc.hInstance);
         return;
     }
 
+    // Update and show window
     ShowWindow(hWnd, SW_SHOWDEFAULT);
     UpdateWindow(hWnd);
 
-    ResourceMem img = ResourceUtil::GetResourceMemory("KREMUWA");
-    Image *kremuwka = new Image((const BYTE *)img.start, (int)img.size, dx);
+    // Load image
+    ResourceMem img = ResourceUtil::GetResourceMemory(resource);
+    Image *kremuwka = new Image((const BYTE *)img.start, (int)img.size, *dx);
     int x = 0;
     int y = 0;
     int x_dir = 0;
@@ -79,24 +90,23 @@ void BorderlessTransparentWindow::prepare_window(std::string title, int speed)
 
     MSG Msg;
     ZeroMemory(&Msg, sizeof(Msg));
-
     while (Msg.message != WM_QUIT)
     {
         if (PeekMessage(&Msg, hWnd, 0, 0, PM_REMOVE))
         {
-            ::DispatchMessage(&Msg);
-            ::TranslateMessage(&Msg);
+            DispatchMessage(&Msg);
+            TranslateMessage(&Msg);
             continue;
         }
-        dx.pd3dDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
-        dx.pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-        dx.pd3dDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
-        dx.pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0, 1.0f, 0);
-        if (dx.pd3dDevice->BeginScene() >= 0)
+        dx->pd3dDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
+        dx->pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+        dx->pd3dDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
+        dx->pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0, 1.0f, 0);
+        if (dx->pd3dDevice->BeginScene() >= 0)
         {
-            /* Draw draw;
-             * draw.Line(0, 0, 500, 500, RGBA(255, 0, 0), 3);
-             * draw.String("asdasda123", 500, 500, centered, RGBA(0, 255, 0), DX9.fontTahoma, true); */
+            // Draw draw;
+            // draw.Line(0, 0, 500, 500, RGBA(255, 0, 0), 3);
+            // draw.String("asdasda123", 500, 500, centered, RGBA(0, 255, 0), DX9.fontTahoma, true);
             if (y >= SCREENHEIGHT - (int)(kremuwka->info.Height))
                 y_dir = 1;
             if (y <= 0)
@@ -109,17 +119,17 @@ void BorderlessTransparentWindow::prepare_window(std::string title, int speed)
             x += x_dir ? -speed : speed;
             y += y_dir ? -speed : speed;
             kremuwka->Draw(x, y);
-            dx.pd3dDevice->EndScene();
+            dx->pd3dDevice->EndScene();
         }
-        HRESULT result = dx.pd3dDevice->Present(NULL, NULL, NULL, NULL);
+        HRESULT result = dx->pd3dDevice->Present(NULL, NULL, NULL, NULL);
 
-        if (result == D3DERR_DEVICELOST && dx.pd3dDevice->TestCooperativeLevel() == D3DERR_DEVICENOTRESET)
-            dx.pd3dDevice->Reset(&dx.d3dpp);
+        if (result == D3DERR_DEVICELOST && dx->pd3dDevice->TestCooperativeLevel() == D3DERR_DEVICENOTRESET)
+            dx->pd3dDevice->Reset(&dx->d3dpp);
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 
-    dx.Cleanup();
+    dx->Cleanup();
     DestroyWindow(hWnd);
     UnregisterClassA(wc.lpszClassName, wc.hInstance);
 }
