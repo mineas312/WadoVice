@@ -2,7 +2,8 @@
 #include <Windows.h>
 #include <string>
 #include <thread>
-
+#include <vector>
+#include <Drawing/Animation.hpp>
 #include <Drawing/DirectX.hpp>
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -13,13 +14,13 @@ class BorderlessTransparentWindow
         BorderlessTransparentWindow();
 
         // Okna muszą mieć unikatowe nazwy
-        void create_window(HINSTANCE hInstance, std::string resource, std::string title, int speed = 3);
+        void create_window(HINSTANCE hInst, std::vector<Animation*> animations, std::string title);
+        DirectX* dx;
 
     private:
-        void prepare_window(HINSTANCE hInstance, std::string resource, std::string title, int speed);
+        void prepare_window(HINSTANCE hInst, std::vector<Animation*> animations, std::string title);
 
     private:
         HINSTANCE hInstance;
-        DirectX* dx;
         std::thread window_thread;
 };
