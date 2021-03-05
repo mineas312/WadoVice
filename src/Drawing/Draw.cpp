@@ -1,15 +1,15 @@
 #include <Drawing/Draw.hpp>
 #include <Drawing/DirectX.hpp>
 
-void Draw::Line(int x, int y, int x2, int y2, RGBA rgb, float thickness)
+void Draw::Line(int x, int y, int x2, int y2, RGBA rgb, DirectX dx, float thickness)
 {
-    g_Line->SetWidth(thickness);
+    dx.Line->SetWidth(thickness);
     D3DXVECTOR2 points[2];
     points[0].x = x;
     points[1].x = x2;
     points[0].y = y;
     points[1].y = y2;
-    g_Line->Draw(points, 2, D3DCOLOR_ARGB(rgb.A, rgb.R, rgb.G, rgb.B));
+    dx.Line->Draw(points, 2, D3DCOLOR_ARGB(rgb.A, rgb.R, rgb.G, rgb.B));
 }
 
 void Draw::String(std::string text, int x, int y, int orientation, RGBA color, ID3DXFont *font, bool bordered, RGBA bcolor)

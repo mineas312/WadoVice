@@ -1,64 +1,59 @@
 #include <Drawing/DirectX.hpp>
 
-LPDIRECT3D9 g_pD3D = NULL;
-LPDIRECT3DDEVICE9 g_pd3dDevice = NULL;
-D3DPRESENT_PARAMETERS g_d3dpp = {};
-ID3DXLine *g_Line = NULL;
-
 bool DirectX::Init(HWND hWnd)
 {
-    if ((g_pD3D = Direct3DCreate9(D3D_SDK_VERSION)) == NULL)
+    if ((pD3D = Direct3DCreate9(D3D_SDK_VERSION)) == NULL)
         return false;
 
-    ZeroMemory(&g_d3dpp, sizeof(g_d3dpp));
-    g_d3dpp.Windowed = TRUE;
-    g_d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-    g_d3dpp.BackBufferFormat = D3DFMT_UNKNOWN;
-    g_d3dpp.EnableAutoDepthStencil = TRUE;
-    g_d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
-    g_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_ONE;
+    ZeroMemory(&d3dpp, sizeof(d3dpp));
+    d3dpp.Windowed = TRUE;
+    d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
+    d3dpp.BackBufferFormat = D3DFMT_UNKNOWN;
+    d3dpp.EnableAutoDepthStencil = TRUE;
+    d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
+    d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_ONE;
 
-    if (g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &g_d3dpp, &g_pd3dDevice) < 0)
+    if (pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &d3dpp, &pd3dDevice) < 0)
         return false;
 
-    if (FAILED(D3DXCreateLine(g_pd3dDevice, &g_Line)))
+    if (FAILED(D3DXCreateLine(pd3dDevice, &Line)))
     {
-        if (g_pd3dDevice)
+        if (pd3dDevice)
         {
-            g_pd3dDevice->Release();
-            g_pd3dDevice = NULL;
+            pd3dDevice->Release();
+            pd3dDevice = NULL;
         }
-        if (g_pD3D)
+        if (pD3D)
         {
-            g_pD3D->Release();
-            g_pD3D = NULL;
+            pD3D->Release();
+            pD3D = NULL;
         }
         return false;
     }
 
-    g_Line->SetWidth(1.0f);
-    g_Line->SetPattern(0xFFFFFFFF);
-    g_Line->SetAntialias(false);
+    Line->SetWidth(1.0f);
+    Line->SetPattern(0xFFFFFFFF);
+    Line->SetAntialias(false);
 
-    D3DXCreateFontA(g_pd3dDevice, 16, 0, FW_BOLD, 1, false, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Tahoma", &fontTahoma);
+    D3DXCreateFontA(pd3dDevice, 16, 0, FW_BOLD, 1, false, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Tahoma", &fontTahoma);
 
     return true;
 }
 
 void DirectX::Cleanup()
 {
-    if (g_pd3dDevice)
+    if (pd3dDevice)
     {
-        g_pd3dDevice->Release();
-        g_pd3dDevice = NULL;
+        pd3dDevice->Release();
+        pd3dDevice = NULL;
     }
-    if (g_pD3D)
+    if (pD3D)
     {
-        g_pD3D->Release();
-        g_pD3D = NULL;
+        pD3D->Release();
+        pD3D = NULL;
     }
-    if (g_Line != NULL)
+    if (Line != NULL)
     {
-        g_Line->Release();
+        Line->Release();
     }
 }

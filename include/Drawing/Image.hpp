@@ -23,7 +23,7 @@ class Image
         }
     }
 
-    Image(const BYTE *image, int size);
+    Image(const BYTE *image, int size, DirectX dx);
 
     void Draw(int x, int y, int z = 0);
 };

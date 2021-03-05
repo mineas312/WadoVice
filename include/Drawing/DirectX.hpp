@@ -5,19 +5,16 @@
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
 
-extern LPDIRECT3D9 g_pD3D;
-extern LPDIRECT3DDEVICE9 g_pd3dDevice;
-extern D3DPRESENT_PARAMETERS g_d3dpp;
-extern ID3DXLine *g_Line;
-
 class DirectX
 {
-  private:
-  public:
-    ID3DXFont *fontTahoma;
-
+public:
     bool Init(HWND hWnd);
     void Cleanup();
+  
+public:
+    ID3DXFont *fontTahoma;
+    LPDIRECT3D9 pD3D;
+    LPDIRECT3DDEVICE9 pd3dDevice;
+    D3DPRESENT_PARAMETERS d3dpp;
+    ID3DXLine *Line;
 };
-
-extern DirectX DX9;

@@ -1,12 +1,12 @@
 #include <Drawing/Image.hpp>
 
-Image::Image(const BYTE *image, int size)
+Image::Image(const BYTE *image, int size, DirectX dx)
 {
     if (image)
     {
         if (!texture)
         {
-            D3DXCreateTextureFromFileInMemory(g_pd3dDevice, image, size, &texture);
+            D3DXCreateTextureFromFileInMemory(dx.pd3dDevice, image, size, &texture);
             D3DXGetImageInfoFromFileInMemory(image, size, &info);
         }
 
@@ -16,7 +16,7 @@ Image::Image(const BYTE *image, int size)
 			imgDesc.Width = w;*/
 
         if (!sprite)
-            D3DXCreateSprite(g_pd3dDevice, &sprite);
+            D3DXCreateSprite(dx.pd3dDevice, &sprite);
     }
 }
 void Image::Draw(int x, int y, int z)
