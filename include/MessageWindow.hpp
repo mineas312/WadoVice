@@ -23,7 +23,7 @@ struct MsgParams
     MSG_WINDOW_TYPES mwt;
 };
 
-MsgParams* createMsgParams(std::string title, std::string message, MSG_WINDOW_TYPES mwt);
+MsgParams *createMsgParams(std::string title, std::string message, MSG_WINDOW_TYPES mwt);
 
 class MessageWindow
 {
@@ -33,5 +33,5 @@ class MessageWindow
     // Wyświetla message boxa, zatrzymuje działanie programu do czasu kliknięcia
     static void show_message(std::string title, std::string message, MSG_WINDOW_TYPES mwt);
 
-    static void show_async_message(MsgParams* params);
+    static void show_async_message(MsgParams *params);
 };

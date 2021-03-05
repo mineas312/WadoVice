@@ -10,13 +10,16 @@ set(CMAKE_CXX_STANDARD 17)
 # Enable debug symbols
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-
 # ---- Shared library project ----
 project(${PROJECT_NAME} VERSION ${PROJECT_VERSION} DESCRIPTION "Changeme")
 
+# Add DirectX
+include_directories($ENV{DXSDK_DIR}/Include)
+link_directories($ENV{DXSDK_DIR}/Lib/x86)
+
 # Add include, src and resources to the project
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/src)
-file(GLOB SRC_LIB_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
+file(GLOB SRC_LIB_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/Drawing/*.cpp)
 file(GLOB RES_LIB_FILES ${CMAKE_CURRENT_SOURCE_DIR}/res/*.rc)
 
 # Set project as a shared library
@@ -28,6 +31,7 @@ PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION}
 )
+
 
 # Compiler settings
 if(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")

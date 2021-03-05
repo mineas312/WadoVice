@@ -4,7 +4,7 @@
 #include <winbase.h>
 #include <Mmsystem.h>
 #include <mciapi.h>
-#include "ResourceUtil.hpp"
+#include <ResourceUtil.hpp>
 #include <string>
 
 MP3Player::MP3Player()
@@ -12,7 +12,7 @@ MP3Player::MP3Player()
 
 void MP3Player::LoadRes(std::string res_name)
 {
-    LoadFile(GetResourcePath(res_name, ".mp3").string(), res_name);
+    LoadFile(ResourceUtil::GetResourcePath(res_name, ".mp3").string(), res_name);
 }
 
 void MP3Player::LoadFile(std::string mp3_path, std::string alias)
