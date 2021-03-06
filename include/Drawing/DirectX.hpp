@@ -7,11 +7,11 @@
 
 class DirectX
 {
-public:
+  public:
     bool Init(HWND hWnd);
     void Cleanup();
-  
-public:
+
+  public:
     ID3DXFont *fontTahoma;
     LPDIRECT3D9 pD3D;
     LPDIRECT3DDEVICE9 pd3dDevice;

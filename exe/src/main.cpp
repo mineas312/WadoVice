@@ -4,8 +4,9 @@
 #include <MP3Player.hpp>
 #include <BorderlessTransparentWindow.hpp>
 #include <windows.h>
-
+#include <Drawing/Anims/Kremuwka.hpp>
 #include <vector>
+#include <random>
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
@@ -19,12 +20,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     //URLOpener::open_url("https://www.youtube.com/watch?v=khpq8uenSPw");
     //MessageWindow::show_async_message(createMsgParams("JAN PAWEL DRUGI", "JEBAL MALE DZIECI", MSG_WINDOW_TYPES::OK));
 
-    for(int i = 0; i < 20; i++)
+    int screen_width = GetSystemMetrics(SM_CXSCREEN);
+    int screen_height = GetSystemMetrics(SM_CYSCREEN);
+    std::vector<Animation *> animations;
+    BorderlessTransparentWindow *anims_window = new BorderlessTransparentWindow();
+    for (int i = 1; i < 50; i++)
     {
-        BorderlessTransparentWindow* kremuwa = new BorderlessTransparentWindow();
-        kremuwa->create_window(hInstance, "KREMUWA", "KREMUWKUJ" + std::to_string(i), 40);
-        Sleep(1000);
+        animations.push_back(new Kremuwka(anims_window->dx, screen_width, screen_height, 0, 0, i));
     }
+    anims_window->create_window(hInstance, animations, "KREMUWKUJ");
 
     while (1)
         Sleep(1);
