@@ -31,13 +31,13 @@ BorderlessTransparentWindow::BorderlessTransparentWindow()
     dx = new DirectX();
 }
 
-void BorderlessTransparentWindow::create_window(HINSTANCE hInst, std::vector<Animation *> animations, std::string title)
+void BorderlessTransparentWindow::create_window(HINSTANCE hInst, std::vector<Animation *> animations, std::string title, int width, int height)
 {
     hInstance = hInst;
-    window_thread = std::thread(&BorderlessTransparentWindow::prepare_window, this, hInst, animations, title);
+    window_thread = std::thread(&BorderlessTransparentWindow::prepare_window, this, hInst, animations, title, width, height);
 }
 
-void BorderlessTransparentWindow::prepare_window(HINSTANCE hInstance, std::vector<Animation *> animations, std::string title)
+void BorderlessTransparentWindow::prepare_window(HINSTANCE hInstance, std::vector<Animation *> animations, std::string title, int width, int height)
 {
     // Create window class
     WNDCLASSEXA wc;
@@ -64,7 +64,7 @@ void BorderlessTransparentWindow::prepare_window(HINSTANCE hInstance, std::vecto
     }
 
     // Create window
-    HWND hWnd = CreateWindowExA(WS_EX_TOPMOST | WS_EX_LAYERED | WS_EX_TOOLWINDOW, title.c_str(), title.c_str(), WS_POPUP, 1, 1, SCREENWIDTH, SCREENHEIGHT, 0, 0, 0, 0);
+    HWND hWnd = CreateWindowExA(WS_EX_TOPMOST | WS_EX_LAYERED | WS_EX_TOOLWINDOW, title.c_str(), title.c_str(), WS_POPUP, 1, 1, width, height, 0, 0, 0, 0);
     std::cout << GetLastError() << std::endl;
     SetLayeredWindowAttributes(hWnd, 0, 0, LWA_ALPHA);
     SetLayeredWindowAttributes(hWnd, 0, 0, LWA_COLORKEY);
@@ -117,7 +117,7 @@ void BorderlessTransparentWindow::prepare_window(HINSTANCE hInstance, std::vecto
         if (result == D3DERR_DEVICELOST && dx->pd3dDevice->TestCooperativeLevel() == D3DERR_DEVICENOTRESET)
             dx->pd3dDevice->Reset(&dx->d3dpp);
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        std::this_thread::sleep_for(std::chrono::milliseconds(16));
     }
 
     dx->Cleanup();

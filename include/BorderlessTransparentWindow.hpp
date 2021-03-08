@@ -14,11 +14,11 @@ class BorderlessTransparentWindow
     BorderlessTransparentWindow();
 
     // Okna muszą mieć unikatowe nazwy
-    void create_window(HINSTANCE hInst, std::vector<Animation *> animations, std::string title);
+    void create_window(HINSTANCE hInst, std::vector<Animation *> animations, std::string title, int width, int height);
     DirectX *dx;
 
   private:
-    void prepare_window(HINSTANCE hInst, std::vector<Animation *> animations, std::string title);
+    void prepare_window(HINSTANCE hInst, std::vector<Animation *> animations, std::string title, int width, int height);
 
   private:
     HINSTANCE hInstance;

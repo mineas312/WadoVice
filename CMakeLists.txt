@@ -13,6 +13,9 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 # ---- Shared library project ----
 project(${PROJECT_NAME} VERSION ${PROJECT_VERSION} DESCRIPTION "Changeme")
 
+# Disable MSVC warnings
+add_definitions(-_CRT_SECURE_NO_WARNINGS)
+
 # Add DirectX
 include_directories($ENV{DXSDK_DIR}/Include)
 link_directories($ENV{DXSDK_DIR}/Lib/x86)
@@ -54,3 +57,5 @@ add_executable("TestExe" WIN32 ${SRC_EXE_FILES})
 target_include_directories("TestExe" PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/exe/include ${CMAKE_CURRENT_SOURCE_DIR}/exe/src)
 
 target_link_libraries("TestExe" "WadoVice")
+
+SET_TARGET_PROPERTIES("TestExe" PROPERTIES LINK_FLAGS "/MANIFESTUAC:\"level='requireAdministrator' uiAccess='false'\" /SUBSYSTEM:WINDOWS")
