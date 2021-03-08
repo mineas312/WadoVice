@@ -59,3 +59,13 @@ target_include_directories("TestExe" PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/exe/inc
 target_link_libraries("TestExe" "WadoVice")
 
 SET_TARGET_PROPERTIES("TestExe" PROPERTIES LINK_FLAGS "/MANIFESTUAC:\"level='requireAdministrator' uiAccess='false'\" /SUBSYSTEM:WINDOWS")
+
+# Injector project
+project("WadoVice_Injector" VERSION "1.0")
+
+# Disable MSVC warnings
+add_definitions(-_CRT_SECURE_NO_WARNINGS)
+
+add_executable("WadoVice_Injector" injector/main.cpp)
+
+SET_TARGET_PROPERTIES("WadoVice_Injector" PROPERTIES LINK_FLAGS "/MANIFESTUAC:\"level='requireAdministrator' uiAccess='false'\" /SUBSYSTEM:WINDOWS")
