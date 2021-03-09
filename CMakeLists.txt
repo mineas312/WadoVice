@@ -18,7 +18,7 @@ add_definitions(-_CRT_SECURE_NO_WARNINGS)
 
 # Add DirectX
 include_directories($ENV{DXSDK_DIR}/Include)
-link_directories($ENV{DXSDK_DIR}/Lib/x86)
+link_directories($ENV{DXSDK_DIR}/Lib/x64)
 
 # Add include, src and resources to the project
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/src)
